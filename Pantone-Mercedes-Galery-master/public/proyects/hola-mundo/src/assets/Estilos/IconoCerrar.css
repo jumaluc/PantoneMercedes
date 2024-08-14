@@ -1,0 +1,28 @@
+
+.iconoCerrarClose {
+    border-radius: 50%; 
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 20px;
+    height: 20px;
+    background-color: transparent; 
+    padding: 0;
+    z-index: 1;
+}
+
+.iconoCerrarClose img {
+    opacity: .8;
+    width: 100%; 
+    height: 100%;
+    cursor: pointer;
+    border-radius: 50%; 
+    background-color: transparent; 
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); 
+}
+.iconoCerrarClose img:hover {
+    opacity: 0.6;
+    border: 1px solid rgb(0, 0, 0);
+    cursor: context-menu;
+}

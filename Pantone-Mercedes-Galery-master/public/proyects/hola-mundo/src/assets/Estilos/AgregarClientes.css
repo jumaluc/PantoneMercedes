@@ -1,0 +1,120 @@
+.agregarClientes-main{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgb(0, 0, 0, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100; 
+    font-family: apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+
+}
+.agregarClientes-main form{
+    position: relative;
+    background-color: rgb(5, 5, 5);
+    border: 1px solid rgb(255, 153, 0);
+    width: 30%;
+    height: 30%;
+    gap: 22px;
+    min-width: 300px;
+    min-height: 350px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    z-index: 101;
+    cursor: default;
+    align-items: center;
+    box-shadow: 0 0 10px 10px rgba(0, 0, 0, 0.5);
+}
+.agregarClientes-main form h3{
+    font-size: 25px;
+    color: rgb(255, 153, 0);
+    text-align: center;
+    font-family: "Montserrat", sans-serif;
+    letter-spacing: 1px;
+
+    border-bottom:1px solid rgb(255, 153, 0);
+    width: 100%;
+    height: 30px;
+}
+.agregarClientes-main form input[type="text"]{
+    width:  70%;
+    height: 30px;
+    padding-left: 7px;
+    background-color: rgb(255, 153, 0);
+    color: black;
+    border: none;
+    border-radius: 5px;
+    border: none;
+}
+.agregarClientes-main form input[type="text"]::placeholder{
+    color: black;
+    font-weight: 700;
+    opacity: 0.8;
+    outline: none;
+}
+
+
+.agregarClientes-main form input:focus{
+    outline: none;
+}
+.close{
+    padding: 0;
+    margin: 0;
+    position: absolute;
+    top: 10px;
+    border-radius:50% ;
+    right: 10px;
+    width: 20px;
+    height: 20px;
+    border: none;
+    color: rgb(65, 61, 61);
+    cursor: pointer;
+}
+.close img{
+    width: 100%;
+    height: 100%;
+    border-radius: 0;
+    
+}
+.agregarClientes-button{
+    width: 100px;
+    height: 40px;
+    border-radius: 20px;
+    border: none;
+    background-color: rgb(255, 153, 0);
+    color: rgb(0, 0, 0);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-bottom: 20px;
+}
+.agregarClientes-button:hover{
+    cursor: pointer;
+    background-color: rgb(0, 0, 0);
+    color: rgb(255, 153, 0);
+}
+.agregarClientes-label-files{
+    width: 45%;
+    text-align: center;
+    min-width: 20%;
+    height: 30px;
+    padding-top: 5px;
+    background-color: rgb(255, 153, 0);
+    color: rgb(0, 0, 0);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: 500;
+    border: none;
+    border-radius: 5px;
+}
+.inputdisplaynone{
+    display: none;
+}
+.agregarClientes-label-files:hover{
+    cursor: pointer;
+    background-color: rgb(0, 0, 0);
+    color: rgb(255, 153, 0);
+}

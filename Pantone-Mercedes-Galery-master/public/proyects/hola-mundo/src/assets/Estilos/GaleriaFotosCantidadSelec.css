@@ -1,0 +1,138 @@
+
+.seleccionador-send{
+    margin-left:9px ;
+}
+
+
+.seleccionador-div-texto2{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+}
+.seleccionador-div-texto2 label{
+    font-size: 25px;
+    font-weight: 500;
+    font-family: raleway, sans-serif;
+
+}
+.selecionador-close{
+    width: 40px;
+    height: 40px;
+    padding: 7px;
+    margin-right: 25px;
+}
+.selecionador-close:hover{
+    cursor: pointer;
+    background-color: rgb(233, 230, 230);
+    border-radius: 50%;
+    
+}
+.seleccionador-div{
+    width: 95%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    justify-content: space-between;
+}
+.mandarFotos{
+    display: flex;
+    font-size: 25px;
+    justify-content: center;
+    align-items: center;
+    font-family: raleway, sans-serif;
+    font-weight: 500;
+    padding: 5px;
+}
+.camera{
+    stroke-width: 1px;
+}
+
+.seleccionador-div-iconos-2{
+    display: flex;
+    margin: 0;
+    padding: 0;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+.seleccionador-send:hover{
+    cursor: pointer;
+    color: red;
+
+    .mandarFotos{
+        color: red;
+    }
+}
+.mandarFotos:hover{
+    cursor: pointer;
+    color: red;
+
+    .seleccionador-send{
+        color: red;
+    }
+}
+
+
+@media screen and (max-width: 420px) {
+
+
+    .selecionador-close{
+        width: 30px;
+        height: 30px;
+        margin: 0;
+        display: block;
+    }
+    .camera{
+        width: 25px;
+        height: 25px;
+        position: absolute;
+        top : 10px;
+        left: 20px;
+
+    }
+    .seleccionador-div{
+        flex-direction: row;
+        align-items: end;
+        justify-content: space-between;
+    }
+    .seleccionador-div-texto2{
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        height: 50%;
+        display: flex;
+        justify-content: start;
+    }
+    .seleccionador-div-texto2 label{
+        font-size: 16px;
+        font-weight: 500;
+        display: block;
+    }
+    .seleccionador-div-iconos-2{
+        margin: 0;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: row-reverse;
+        padding: 0;
+        height: 50%;
+    }
+    .seleccionador-div-iconos-2 label{
+      font-size: 16px;
+      margin-left: 10px;
+        padding: 0;
+        letter-spacing: 1px;
+
+    }
+    .seleccionador-send{
+        width: 23px;
+        height: 23px;
+        margin-right: 5px;
+    }
+}
+

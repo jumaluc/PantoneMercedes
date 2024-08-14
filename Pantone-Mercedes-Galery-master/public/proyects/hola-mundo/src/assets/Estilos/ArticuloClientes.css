@@ -1,0 +1,95 @@
+.articulo-container{
+    display:flex;
+    box-shadow: 0 0 5px 5px rgba(27, 27, 27, 0.5);
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    height: 500px;
+    width: 300px;
+    padding: 10px;
+}
+.articulo-container:hover{
+    cursor: pointer;
+    box-shadow: 0 0 3px 3px rgba(240, 237, 237, 0.5);
+
+
+    .articulo-img{
+        opacity: 0.8;
+    }
+
+}
+
+
+.articulo-header{
+    width: 100%;
+    height: 50px;
+    border-left: 2px solid #000;
+    display: flex;
+ 
+}
+.articulo-header h3{
+    font-size: 17px;
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+    color: rgb(236, 235, 233);
+    margin-left: 3px;
+    font-weight: bold;
+    font-family: lato, sans-serif;
+    justify-content: center;
+    align-items: center;
+
+
+}
+.articulo-img{
+    width: 100%;
+    height: 400px;
+    background-color: #f0f0f0;
+    border :1px solid #000;
+    object-fit: cover;
+}
+.articulo-div-iconos{
+    display: flex;
+    position: relative;
+    z-index: 1000;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    height: 50px;
+}
+.articulo-close{
+    cursor: pointer;
+    width: 50%;
+    stroke-width: 1px;
+    height: 100%;
+    position: relative;
+    z-index: 1000;
+}
+.articulo-close:hover{
+    cursor: pointer;
+    color: red;
+
+}
+.container-plus{
+    display: flex;
+    cursor: pointer;
+    justify-content: center;
+    align-items: center;
+    height: 500px;
+    border: 1px solid #000;
+    box-shadow: 0 0 5px 5px rgba(27, 27, 27, 0.5);
+    width: 300px;
+}
+.container-plus:hover{
+    cursor: pointer;
+    box-shadow: 0 0 3px 3px rgba(240, 237, 237, 0.5);
+}
+
+.articulo-plus{
+    cursor: pointer;
+    width: 50%;
+    stroke-width: 1px;
+    height: 100%;
+}
+.articulo-plus:hover{
+    cursor: pointer;
+    color: green;
+}

@@ -1,0 +1,58 @@
+.estasSeguro-section{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    background: rgb(0, 0, 0, 0.4);
+    position: fixed;
+    top: 0;
+    left: 0;
+    font-family: "Montserrat", sans-serif;
+    z-index: 10000;
+}
+.estasSeguro-section main{
+    box-shadow: 0 0 10px 10px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgb(255, 153, 0);
+    background-color: rgb(5, 5, 5);
+    width: 500px;
+    height: 200px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.estasSeguro-section-h3{
+    font-size: 20px;
+    font-weight: 7000;
+    color: rgb(255, 153, 0);
+
+}
+.estasSeguro-section-b{
+    width: 70px;
+    height: 20px;
+    background-color: rgb(255, 153, 0);
+    color: rgb(0, 0, 0);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 10px;
+}
+
+.estasSeguro-section-b:hover{
+    background-color: rgb(0, 0, 0);
+    color: rgb(255, 153, 0);
+    border: 1px solid rgb(255, 153, 0);
+}
+
+@media screen and (max-width:550px){
+
+    .estasSeguro-section main{
+        width: 300px;
+        height: 150px;
+    }
+    .estasSeguro-section-h3{
+        font-size: 15px;
+    }
+}

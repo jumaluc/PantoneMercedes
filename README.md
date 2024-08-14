@@ -3,10 +3,10 @@ Este es un proyecto realizado para la empresa de fotografia y video Pantone Film
 Duracion del proyecto : 3 semanas.
 
 Funcionamiento de la pagina : 
-  - Mi cliente en su pagina administradora puede agregar clientes junto con su informacion y las fotos que este va a tener en su galeria.
-  - Tambien puede eliminar los clientes junto con sus fotos, y agregarles fotos.
-  - Los clientes pueden acceder a su galeria a traves del link de la pagina y ver todas sus fotos.
-  - Los clientes pueden seleccionar las fotos que les gustan y "mandarlas". Al mandarlas se le crea a mi cliente en su google drive una carpeta con el nombre de su cliente y con todas sus fotos.
+  - Mi cliente en su pagina administradora puede agregar usuarios junto con su informacion y las fotos que este va a tener en su galeria.
+  - Tambien puede eliminar los usuarios junto con sus fotos, y agregarles fotos.
+  - Los usuarios pueden acceder a su galeria a traves del link de la pagina y ver todas sus fotos.
+  - Los usuarios pueden seleccionar las fotos que les gustan y "mandarlas". Al mandarlas se le crea a mi cliente en su google drive una carpeta con el nombre de su cliente y con todas sus fotos.
 
 Tecnologias:
   -Use Vite con React para la parte del cliente.

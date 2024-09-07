@@ -2,23 +2,25 @@ import { useState, useEffect } from "react";
 import "../Estilos/PantonewebMain.css";
 import { useNavigate } from "react-router-dom";
 import { AgregarClientes } from "./AgregarClientes.jsx";
-import { IconoCerrarAct } from "./IconoCerrarAct.jsx";
 import { EstasSeguroBorrar } from "./EstasSeguroBorrar.jsx";
 import { AgregarImagenes } from "./AgregarImagenes.jsx";
 import { ArticuloClientes } from "./ArticuloClientes.jsx";
 import {Plus} from './Plus.jsx'
+import { BarraCarga } from "./BarraCarga.jsx";
 
 export function PantoneWebMain({ setActualizarApp, actualizarApp }) {
     const [clientes, setClientes] = useState([]);
     const navigate = useNavigate(); 
     const [formVisible, setFormVisible] = useState(false);
-    const [cerrarVisible, setCerrarVisible] = useState(null);
     const [estasSeguroVisible, setEstasSeguroVisible] = useState(null);
     const [actualizarImagenes, setActualizarImagenes] = useState(false);
     const [id, setId] = useState(null);
+    const [cantidadActual, setCantidadActual] = useState(0);
+    const [cantidadTotal, setCantidadTotal] = useState(0);
+    const [cargando, setCargando] = useState(false);
 
     useEffect(() => {
-        fetch("http://92.112.179.32:3000/home/clientes/")
+        fetch("http://localhost:3000/home/clientes/")
             .then(response => response.json())
             .then(data => {setClientes(data);})
             .catch(err => console.error("Error en la API " + err));
@@ -28,25 +30,11 @@ export function PantoneWebMain({ setActualizarApp, actualizarApp }) {
         navigate(`/cliente/${id}/${nombre}/${apellido}`);
     }
 
-
     function handleClickAgregarImg(event){
         event.stopPropagation();
         setId(event.target.id)
         setActualizarImagenes(true);
     }
-
-//     <div key={cliente.id} className="pantoneweb-div"  
-
-//     onClick={() => handleClick(cliente)}>
-//    {cerrarVisible === cliente.id && (
-//        <div className="pantoneweb-icono-container">
-//        <img onClick={(e)=>{handleClickAgregarImg(e, cliente.id)}} className="pantoneweb-icono-agregar" src="https://cdn.icon-icons.com/icons2/1875/PNG/512/plus_120249.png" alt="imagen"/>
-
-//        </div>
-//    )}
-//    <strong className="pantoneweb-strong">{cliente.nombre}</strong>
-//    <strong className="pantoneweb-strong">{cliente.apellido}</strong>
-// </div>
 
 
     return (
@@ -64,9 +52,10 @@ export function PantoneWebMain({ setActualizarApp, actualizarApp }) {
                     <p>No hay clientes disponibles</p>
                 )}
                 <div className="container-plus" onClick={() => setFormVisible(true)}>   <Plus className="pantoneweb-plus" onClick={() => setFormVisible(true)}/></div> 
-                {formVisible && <AgregarClientes setActualizarApp={setActualizarApp} setFormVisible={setFormVisible} />}
-                {actualizarImagenes && <AgregarImagenes id={id} setActualizarImagenes={setActualizarImagenes} />}
-                {estasSeguroVisible !== null && <EstasSeguroBorrar clienteID={estasSeguroVisible} setActualizarApp={setActualizarApp} setEstasSeguroVisible={setEstasSeguroVisible} />}
+                {formVisible && <AgregarClientes setActualizarApp={setActualizarApp} setFormVisible={setFormVisible} setCargando={setCargando} setCantidadActual={setCantidadActual} setCantidadTotal={setCantidadTotal}/>}
+                {actualizarImagenes && <AgregarImagenes id={id} setActualizarApp={setActualizarApp} setActualizarImagenes={setActualizarImagenes} setCargando={setCargando} setCantidadActual={setCantidadActual} setCantidadTotal={setCantidadTotal} />}
+                {estasSeguroVisible !== null && <EstasSeguroBorrar clienteID={estasSeguroVisible} setActualizarApp={setActualizarApp} setEstasSeguroVisible={setEstasSeguroVisible} setCantidadActual={setCantidadActual} setCantidadTotal={setCantidadTotal} setCargando={setCargando}  />}
+                {cargando && <BarraCarga cantidadActual={cantidadActual} cantidadTotal={cantidadTotal} />}
             </section>
            
 

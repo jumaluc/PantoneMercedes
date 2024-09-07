@@ -1,6 +1,6 @@
 const fs = require('fs');
 const { google } = require('googleapis');
-const apikeys = require("");
+const apikeys = require("C:/Users/jmcar/OneDrive/Escritorio/Proyectos/PantoneWeb/Pantone-Mercedes-Galery-master/Servidor/Google Cloud/pantone-web-74dbcee1cb11.json");
 const fetch = require('node-fetch');
 const stream = require('stream');
 
@@ -23,7 +23,7 @@ async function createFolder(authClient, folderName) {
     const fileMetadata = {
         name: folderName,
         mimeType: 'application/vnd.google-apps.folder',
-        parents: ['xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'] 
+        parents: ['12aDW3nypZ1qiH7FY1Jr_WI_ITSy1Losa'] 
     };
 
     try {
@@ -41,7 +41,6 @@ async function createFolder(authClient, folderName) {
 async function uploadFileDrive(authClient, folderId,  signedUrl, fileName) {
     const drive = google.drive({ version: 'v3', auth: authClient });
 
-    console.log("e")
     const response = await fetch(signedUrl);
     if (!response.ok) throw new Error(`Failed to fetch ${signedUrl}: ${response.statusText}`);
     

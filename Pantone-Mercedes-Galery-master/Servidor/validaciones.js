@@ -12,8 +12,9 @@ const schema = zod.object({
             return extencionesImgValidas.includes(ext);
         }, {message: "Extensión de archivo no válida"}),
         mimetype: zod.string(),
-        path : zod.string(),
-        size: zod.number()
+        size: zod.number(),
+        buffer : zod.unknown()
+
     }))
 });
 
@@ -27,7 +28,7 @@ const schemaFotos = zod.object({
             return extencionesImgValidas.includes(ext);
         }, {message: "Extensión de archivo no válida"}),
         mimetype: zod.string(),
-        path : zod.string(),
+        buffer : zod.unknown(),
         size: zod.number()
     }))
 

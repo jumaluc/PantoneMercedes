@@ -2,10 +2,10 @@ const {deleteFile ,getFiles, saveImage} = require("../Google Cloud/apiCloud.js")
 const mysql = require("mysql2/promise");
 
 const config = {
-    host: "127.0.0.1",
-    user:"jumaluc",
+    host: "localhost",
+    user:"root",
     port: 3306,
-    password: "Obi1301wan#1",
+    password: "Obi1301wan",
     database: "PantoneDB"
 }
 let connection;
@@ -113,6 +113,19 @@ class ImagenesModelo{
 
             }
 }
+    static async verificarExistenciaCliente(nombre, apellido){
+        try{
+            const [result] = await connection.query("SELECT id FROM clientes WHERE nombre = ? AND apellido = ?", [nombre, apellido]);
+            if(result.length === 0){
+                return undefined;
+            }
+
+            return result[0].id;
+        }
+        catch(err){
+            console.error("Error al acceder a la base de datos" + err);
+        }
+    }
 }
 
 module.exports = {ImagenesModelo};

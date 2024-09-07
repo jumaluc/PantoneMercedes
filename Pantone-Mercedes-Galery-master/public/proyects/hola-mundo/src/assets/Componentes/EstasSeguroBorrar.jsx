@@ -1,15 +1,24 @@
 import "../Estilos/EstasSeguroBorrar.css";
+import { BarraCarga } from "./BarraCarga";
+export function EstasSeguroBorrar({clienteID, setEstasSeguroVisible, setActualizarApp, setCargando, setCantidadActual, setCantidadTotal}) {
 
-export function EstasSeguroBorrar({clienteID, setEstasSeguroVisible, setActualizarApp}) {
 
     async function borrarCliente(){
         const id = clienteID;
-        await fetch(`http://92.112.179.32:3000/api/clientes/borrar/${id}`, {
+        setEstasSeguroVisible(null);
+        setCargando(true);
+        await fetch(`http://localhost:3000/api/clientes/borrar/${id}`, {
             method: "DELETE",
         })
-        
-        setActualizarApp(prev => !prev);
-        setEstasSeguroVisible(null);
+        setCantidadActual(1);
+        setCantidadTotal(1);
+        setTimeout(() => {
+            setActualizarApp(prev => !prev);
+            setCantidadActual(0);
+            setCantidadTotal(0);
+            setCargando(false);
+        }, 1000);
+
 
     }
 

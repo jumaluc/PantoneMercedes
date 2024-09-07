@@ -11,7 +11,7 @@ export function GaleriaFotosSeleccionador({informacionImgCheckeada}){
         <header className="seleccionador-header">
             <div className="seleccionador-div-1">
                 <div className="seleccionador-div-texto">
-                    <h3>¡SELECCIONE LAS FOTOS QUE LE GUESTEN!</h3>
+                    <h3>SELECCIONE LAS FOTOS QUE LE GUSTEN Y PRESIONE ENVIAR</h3>
                     <strong>PANTONE MERCEDES</strong>
                 </div>
                 <Camera className={"cameraSeleccionador"}/>

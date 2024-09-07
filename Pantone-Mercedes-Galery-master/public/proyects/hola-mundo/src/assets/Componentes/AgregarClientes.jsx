@@ -1,42 +1,67 @@
 import "../Estilos/AgregarClientes.css";
-import { useState } from "react";
-import { CargandoCliente } from "./CargandoCliente";
 
-export function AgregarClientes({ setFormVisible, setActualizarApp }) {
+export function AgregarClientes({ setFormVisible, setActualizarApp, setCargando, setCantidadActual, setCantidadTotal }) {
 
-    const [cargando, setCargando] = useState(false);
+
 
     async function handleSubmit(e) {
         e.preventDefault();
         setCargando(true);
+        setFormVisible(false);
+        let cantidadActualVariable = 0;
         const nombre = e.target.nombre.value;
         const apellido = e.target.apellido.value;
-        const fotos = e.target.fotos.files
-        const formData = new FormData();
+        const fotos = e.target.fotos.files;
         const fotoPrincipal =  seleccionarFotosVertical(fotos) ?? fotos[0].name;
-        formData.append("nombre", nombre);
-        formData.append("apellido", apellido);
-        formData.append("fotoPrincipal", fotoPrincipal);
-       
-        Array.from(fotos).forEach((file) => {
-            formData.append(`fotos`, file);
-        })  
 
-        await fetch("http://92.112.179.32:3000/api/agregarCliente/", {
-            method: "POST",
-            body: formData
-        })
-        .then(response => response.json())
-        .then(data => {
-            setCargando(false);})
-        .catch(err =>{ 
-            console.error("Error en la API " + err)
-            setCargando(false);
+        let lote = 200;
+        if(fotos.length < 200){
+            lote = fotos.length;
+        }
+        setCantidadActual(0);
+        setCantidadTotal(fotos.length);
+        setTimeout(() => {
+            cantidadActualVariable = lote;
+            setCantidadActual(lote);
+        }, 700);
 
-        });
-        
+        for(let i = 0 ; i < fotos.length; i += lote){
+            const data = new FormData();
+            const subFotos = Array.from(fotos).slice(i, i + lote);
+            subFotos.forEach(foto => {
+                data.append("fotos", foto);
+            });
+            data.append("nombre", nombre);
+            data.append("apellido", apellido);
+            data.append("fotoPrincipal", fotoPrincipal);
+
+            await fetch("http://localhost:3000/api/agregarCliente/", {
+                method: "POST",
+                body: data
+            })
+            .then(response => response.json())
+            .then(data => {
+                cantidadActualVariable += lote;
+                if(cantidadActualVariable + lote > fotos.length){
+                    cantidadActualVariable = fotos.length;
+                }
+                setCantidadActual(cantidadActualVariable);    
+               })
+            .catch(err =>{ 
+                console.error("Error en la API " + err)
+                setCargando(false);
+    
+            });
+            if(i + lote >= fotos.length){
+                lote = fotos.length - i;
+                setCantidadActual(fotos.length);
+
+            }
+        }
+        setCantidadActual(0);
+        setCantidadTotal(0);
+        setCargando(false);
         setActualizarApp(prev => !prev);
-        setFormVisible(prev => !prev)
 
     }
     function seleccionarFotosVertical(fotos){
@@ -61,7 +86,7 @@ export function AgregarClientes({ setFormVisible, setActualizarApp }) {
 
     return (
         <>
-                {cargando ?      <CargandoCliente /> : null}  
+    
             <section >
                 <main className="agregarClientes-main" onClick={()=>{setFormVisible(false)}}>
                     <form onSubmit={handleSubmit} onClick={(event)=>{event.stopPropagation()}}>

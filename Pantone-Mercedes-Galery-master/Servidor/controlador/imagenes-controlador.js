@@ -1,56 +1,82 @@
+const { allowedNodeEnvironmentFlags } = require("node:process");
 const {ImagenesModelo} = require("../modelo/imagenes-modelo.js");
 const {funcionGenerarSchema, funcionGenerarSchemaFotos} = require("../validaciones.js");
 const path = require('node:path');
 const { v4: uuidv4 } = require('uuid');
+const sharp = require('sharp');
+const { buffer } = require("stream/consumers");
 
 
+async function convertirAWebp(foto) {
+    const uniqueId = uuidv4();
+    const nombre = uniqueId + ".webp";
+
+    const bufferImg = await sharp(foto.buffer)
+        .webp({ quality: 75 })  
+        .toBuffer();
+
+    const newSize = bufferImg.length;
+    return {
+        ...foto,
+        originalname: nombre,
+        mimetype: 'image/webp',  
+        buffer: bufferImg,
+        size : newSize
+    };
+}
 class ImagenesControlador{
 
     static async agregarCliente(req, res){
-
 
         const datosCompletos = {
             ...req.body,
             fotos: req.files.map(file => ({
                 originalname: file.originalname,
                 mimetype: file.mimetype,
-                path: file.path,
-                size: file.size
+                size: file.size,
+                buffer: file.buffer
             }))
         };
-
         const cliente =   funcionGenerarSchema(datosCompletos);
-
+        if(cliente.success === false){
+            console.log("error > ", cliente.error.errors);
+        }
 
         const fotoPrincipal = req.body.fotoPrincipal;
 
         const indexFotoPrincipal = cliente.data.fotos.findIndex(foto => foto.originalname === fotoPrincipal);
 
-        const fotosUnicas = cliente.data.fotos.map(foto => {
+        const fotosWEBP = await Promise.all(cliente.data.fotos.map(async (foto) => {
+            const webp = await convertirAWebp(foto);
+            return webp;
+        }));
 
-            const uniqueId = uuidv4();
-            const ext = path.extname(foto.originalname);
-            const nombre = uniqueId + ext;
-            return {
-                ...foto,
-                originalname: nombre
-            }
-        });
-
-        const fotoPrincipalUnica = fotosUnicas[indexFotoPrincipal].originalname;
-
+        let fotoPrincipalUnica = 0;
+        if(indexFotoPrincipal !== -1){
+            fotoPrincipalUnica = fotosWEBP[indexFotoPrincipal].originalname;
+        }
         if(cliente.success === false){
             res.status(400).json(cliente.error.errors);
             return;
         }
-        const id = await ImagenesModelo.agregarCliente(cliente.data.nombre, cliente.data.apellido, fotoPrincipalUnica);
+        const posibleID = await ImagenesModelo.verificarExistenciaCliente(cliente.data.nombre, cliente.data.apellido);
 
+        let id = -1;
+        if(posibleID === undefined){
+             id = await ImagenesModelo.agregarCliente(cliente.data.nombre, cliente.data.apellido, fotoPrincipalUnica);
+             await ImagenesModelo.subirImagenes(fotosWEBP, id);
+
+
+        }
+        else{
+            await ImagenesModelo.subirImagenes(fotosWEBP, posibleID);
+
+        }
         if(id === undefined){
             res.status(500).json("Error al agregar el cliente");
             return;
         }
 
-        await ImagenesModelo.subirImagenes(fotosUnicas, id);
         res.json("Cliente agregado correctamente");
 
     }
@@ -94,17 +120,22 @@ class ImagenesControlador{
     }
     static async actualizarImagenesCliente(req, res){
 
+        console.log("Files > ", req.files.length);
+        
 
         const fotos = req.files.map(file => ({
             originalname: file.originalname,
             mimetype: file.mimetype,
-            path : file.path,
+            buffer : file.buffer,
             size: file.size
         }));
 
         const fotosValidadas = funcionGenerarSchemaFotos({fotos});
 
-        console.log("fotosValidadas", fotosValidadas   );
+        const fotosWEBP = await Promise.all(fotosValidadas.data.fotos.map(async (foto) => {
+            const webp = await convertirAWebp(foto);
+            return webp;
+        }));
 
         if(fotosValidadas.success === false){
             res.status(400).send(fotosValidadas.error.errors);
@@ -112,8 +143,30 @@ class ImagenesControlador{
         }
         const id = req.params.id;
         console.log("id  ", id);
-        await ImagenesModelo.actualizarImagenesCliente(id, fotosValidadas.data.fotos);
+        await ImagenesModelo.actualizarImagenesCliente(id, fotosWEBP);
         res.json("Imagenes actualizadas correctamente");
+    }
+    
+    static async enviarFotos(req, res){
+        const {urls} = req.body;
+        const nombreCompleto = req.query.nombre;
+        console.log("urls > ", urls);
+        try{
+            const authClient = await authorize();
+            const folderId = await createFolder(authClient, nombreCompleto);
+            const uploadPromises = urls.map((url, index) => {
+                const fileName = `imagen_${index}.jpg`; 
+                return uploadFileDrive(authClient, folderId, url, fileName);
+            });
+            await Promise.all(uploadPromises);
+    
+            res.json({message: "Fotos subidas correctamente"});
+    
+            console.log("Fotos subidas a google drive correctamente");
+        }
+        catch(err){
+            res.status(500).json({message: "Error al subir las fotos"});
+        }
     }
 
 }

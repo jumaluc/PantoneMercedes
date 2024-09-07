@@ -5,11 +5,9 @@ import { OverlayImagen } from "./OverlayImagen";
 import { GaleriaFotosSeleccionador } from "./GaleriaFotosSeleccionador";
 import {Check} from "./Check.jsx";
 import { GaleriaFotosCantidadSelec } from "./GaleriaFotosCantidadSelec.jsx";
-import { MagicMotion } from "react-magic-motion";
 import { LazyLoadComponent } from 'react-lazy-load-image-component';
 import {ZoomIn} from "./Zoom.jsx";
 import { PostSubidaFotos } from './PostSubidaFotos.jsx';
-import Confetti from 'react-confetti';
 
 export function GaleriaFotos(){
     const {id, nombre, apellido} = useParams();
@@ -17,21 +15,21 @@ export function GaleriaFotos(){
     let nombreApellido = nombre.toLocaleUpperCase() + " " + apellido.toLocaleUpperCase();
     const [selectedImage, setSelectedImage] = useState(null); 
     const [overlayVisible, setOverlayVisible] = useState(false); 
-    const [checkVisible, setCheckVisible] = useState(null);  
     const [informacionImgCheckeada, setInformacionImgCheckeada] = useState([]);
-    const [indexImgCheckeada, setIndexImgCheckeada] = useState([]);
-    const [cantidadImgSeleccionadas, setCantidadImgSeleccionadas] = useState(0);
+    const clienteKey = `fotosLocalStorageIndex_${id}_${apellido}`;
+    const [indexImgCheckeada, setIndexImgCheckeada] = useState(() => {
+        const storedData = localStorage.getItem(clienteKey);
+        return storedData ? JSON.parse(storedData) : [];
+    });    
+    const [cantidadImgSeleccionadas, setCantidadImgSeleccionadas] = useState(indexImgCheckeada.length);
     const [overlayIndex , setOverlayIndex] = useState(null);
     const [claseCheckOverlay, setClaseCheckOverlay] = useState("");
     const [mostrarPostSubida, setMostrarPostSubida] = useState(false);
-    const [showConfetti, setShowConfetti] = useState(false);
     const galeriaRef = useRef(null);
     const [contenido , setContenido] = useState("Espere unos segundos ...");
     const [isMobile, setIsMobile] = useState(false);
-    const [mostrarClaseCheckAzul, setMostrarClaseCheckAzul] = useState(null);
     const [mostrarHoverCheck, setMostrarHoverCheck] = useState(null);
     const headerRef = useRef(null);
-    const [touchTimer, setTouchTimer] = useState(null);
     const [startTouchY, setStartTouchY] = useState(0);
     const [isHolding, setIsHolding] = useState(false);
     const holdTimeout = useRef(null);
@@ -54,7 +52,7 @@ export function GaleriaFotos(){
 
 
     useEffect(() => {
-        fetch(`http://92.112.179.32:3000/api/clientes/${id}`, {
+        fetch(`http://localhost:3000/api/clientes/${id}`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json"
@@ -69,11 +67,16 @@ export function GaleriaFotos(){
         })
         .then(data => { 
             setImagenes(data)
+            console.log("cantidad fotos: " + data.length)
         })
         .catch(err => console.error("Error en la API " +err))
     },[])
 
-
+    useEffect(() => {
+        if (indexImgCheckeada.length > 0) {
+            localStorage.setItem(clienteKey, JSON.stringify(indexImgCheckeada));
+        }
+    }, [indexImgCheckeada, clienteKey]);
     const handleImageLoad = (event) => {
         const img = event.target;
         const parent = img.parentElement;
@@ -97,6 +100,7 @@ export function GaleriaFotos(){
                 setCantidadImgSeleccionadas(cantidadImgSeleccionadas - 1);
                 return;
             }
+
             setCantidadImgSeleccionadas(cantidadImgSeleccionadas + 1);
             setIndexImgCheckeada([...indexImgCheckeada,index]);
             setInformacionImgCheckeada([...informacionImgCheckeada, imagenes[index]]);
@@ -245,7 +249,7 @@ export function GaleriaFotos(){
                         :   
                         (
                
-                                 <GaleriaFotosCantidadSelec nombreApellido={nombreApellido} setContenido={setContenido} setMostrarPostSubida={setMostrarPostSubida} informacionImgCheckeada={informacionImgCheckeada}  setCantidadImgSeleccionadas={setCantidadImgSeleccionadas}  setInformacionImgCheckeada={setInformacionImgCheckeada} setIndexImgCheckeada={ setIndexImgCheckeada}   cant={cantidadImgSeleccionadas}/>
+                                 <GaleriaFotosCantidadSelec clienteKey={clienteKey} nombreApellido={nombreApellido} setContenido={setContenido} setMostrarPostSubida={setMostrarPostSubida} informacionImgCheckeada={informacionImgCheckeada}  setCantidadImgSeleccionadas={setCantidadImgSeleccionadas}  setInformacionImgCheckeada={setInformacionImgCheckeada} setIndexImgCheckeada={ setIndexImgCheckeada}   cant={cantidadImgSeleccionadas}/>
                         )
 
                     }

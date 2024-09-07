@@ -2,10 +2,10 @@ const {Storage} = require("@google-cloud/storage");
 require("dotenv").config();
 const fs = require('fs');
 const path = require('path');
-const projectId = "xxxx";
-const keyFilename = "xxxx";
+const projectId = "pantone-web";
+const keyFilename = "C:/Users/jmcar/OneDrive/Escritorio/Proyectos/PantoneWeb/Pantone-Mercedes-Galery-master/Servidor/Google Cloud/pantone-web-74dbcee1cb11.json";
 const storage = new Storage({projectId, keyFilename});
-const bucketName = "xxxx";
+const bucketName = "pantone-almacen-imagenes";
 const bucket = storage.bucket(bucketName);
 
 
@@ -21,6 +21,28 @@ async function uploadFile(bucketName, file, fileOutputName) {
         console.log(err);
     }
 }
+async function uploadFileWebp(aa, buffer, fileOutputName){
+    try{
+        const file = bucket.file(fileOutputName);
+        const stream = file.createWriteStream({
+            metadata: {
+                contentType: 'image/webp'
+            }
+        });
+        stream.end(buffer);
+
+        return new Promise((resolve, reject) => {
+            stream.on('finish', ()=> resolve(`File upload succesfully`)  );
+            stream.on('error', reject);
+        })
+
+    }
+    catch(err){
+        console.log(err);
+        throw err;
+    }
+}
+
 
 async function getFiles(fileName) {
     try {
@@ -37,7 +59,7 @@ async function getFiles(fileName) {
 
 async function  saveImage (file){
     try{
-         await uploadFile(process.env.BUCKET_NAME,file.path, file.originalname);
+         await uploadFileWebp(process.env.BUCKET_NAME,file.buffer, file.originalname);
         return;
     }
     catch(err){

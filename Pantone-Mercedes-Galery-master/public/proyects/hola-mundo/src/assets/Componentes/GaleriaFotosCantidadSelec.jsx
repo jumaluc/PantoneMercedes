@@ -2,7 +2,7 @@ import {X} from './Close.jsx';
 import {Send} from './Send.jsx';
 import "../Estilos/GaleriaFotosCantidadSelec.css";
 import {Camera} from './camera.jsx';
-export function GaleriaFotosCantidadSelec({cant, nombreApellido ,setContenido , setCantidadImgSeleccionadas, setInformacionImgCheckeada, setIndexImgCheckeada, informacionImgCheckeada, setMostrarPostSubida, clienteKey}){ 
+export function GaleriaFotosCantidadSelec({cant, nombreApellido ,setContenido , setCantidadImgSeleccionadas, setInformacionImgCheckeada, setIndexImgCheckeada, informacionImgCheckeada, setMostrarPostSubida, clienteKey, setVerFotosSeleccionadas}){ 
 
 
 
@@ -26,30 +26,31 @@ export function GaleriaFotosCantidadSelec({cant, nombreApellido ,setContenido , 
 
     async function mandarFotosCloud(event){
         event.stopPropagation();
+        setVerFotosSeleccionadas(true);
         const filesURL = informacionImgCheckeada;
         console.log("filesURL : ", filesURL)
         setMostrarPostSubida(true);
-        await fetch(`http://localhost:3000/enviarFotos?nombre=${nombreApellido}`, {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ urls: filesURL }),
+        // await fetch(`http://localhost:3000/enviarFotos?nombre=${nombreApellido}`, {
+        //     method: "POST",
+        //     headers: {
+        //         'Content-Type': 'application/json'
+        //     },
+        //     body: JSON.stringify({ urls: filesURL }),
             
-        })
+        // })
 
-        .then(response => response.json())
-        .then(data => 
-            {
+        // .then(response => response.json())
+        // .then(data => 
+        //     {
                 
-                setContenido("¡Fotos enviadas correctamente!");
-                setCantidadImgSeleccionadas(0);
-                setInformacionImgCheckeada([]);
-                setIndexImgCheckeada([]);
-            }
+        //         setContenido("¡Fotos enviadas correctamente!");
+        //         setCantidadImgSeleccionadas(0);
+        //         setInformacionImgCheckeada([]);
+        //         setIndexImgCheckeada([]);
+        //     }
 
-        )
-        .catch(err => console.error(err))
+        // )
+        // .catch(err => console.error(err))
 
     }
 
@@ -66,8 +67,9 @@ export function GaleriaFotosCantidadSelec({cant, nombreApellido ,setContenido , 
                     <label>{seleccionadas}</label>
                 </div>
                 <div className="seleccionador-div-iconos-2">
-                    <label onClick={mandarFotosCloud} className='mandarFotos'>Enviar</label>
-                    <Send className='seleccionador-send' onClick={mandarFotosCloud}/>
+                 <label className='mandarFotos verSeleccionadas'>Ver Seleccionadas</label>
+                    <label onClick={mandarFotosCloud} className='mandarFotos enviar'>Enviar</label>
+                   {/* <Send className='seleccionador-send' onClick={mandarFotosCloud}/> */} 
                 </div>
             </div>
         </header>

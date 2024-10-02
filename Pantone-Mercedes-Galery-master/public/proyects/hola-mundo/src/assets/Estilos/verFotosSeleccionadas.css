@@ -1,0 +1,63 @@
+.verFotosSeleccionadasOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 99999;
+}
+
+.container {
+    width: 85%;
+    height: 90%;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.header {
+    width: 100%;
+    height: 10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 20px;
+    border-bottom: 1px solid #ccc;
+}
+
+.galeria {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); 
+    grid-column-end: span 1;
+    gap: 15px;
+    width: 1200px;
+    height: 100%;
+    padding: 20px;
+}
+
+.containerImagenes {
+    position: relative;
+    background-color: rgb(240, 240, 240);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.fotosSeleccionadas {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    transition: transform 0.3s ease-in-out;
+}
+
+.fotosSeleccionadas:hover {
+    transform: scale(1.05);
+}

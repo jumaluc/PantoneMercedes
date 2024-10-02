@@ -2,7 +2,6 @@ const express = require('express');
 const multer = require('multer');
 const app = express();
 const path = require('path');
-const  {authorize, createFolder, uploadFileDrive, processUrls} = require("./GoogleDriveApi/apiDrive.js");
 const {ImagenesControlador} = require("./controlador/imagenes-controlador.js");
 const cors = require('cors');
 const fs = require('fs');
@@ -21,8 +20,6 @@ app.get("/home/clientes", ImagenesControlador.obtenerClientes);
 app.get('/api/clientes/:id', ImagenesControlador.obtenerTodasLasImagenes);
 
 app.post("/api/agregarCliente", upload.array("fotos",500), ImagenesControlador.agregarCliente);
-
-//app.post("/:id", upload.array("imagenes", 100), ImagenesControlador.subirImagenes);
 
 app.delete("/api/clientes/borrar/:id", ImagenesControlador.borrarCliente);
 

@@ -9,9 +9,10 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
-
+    padding-left: 260px;
 }
 .seleccionador-div-texto2 label{
+    text-align: center;
     font-size: 25px;
     font-weight: 500;
     font-family: raleway, sans-serif;
@@ -25,7 +26,7 @@
 }
 .selecionador-close:hover{
     cursor: pointer;
-    background-color: rgb(233, 230, 230);
+    background-color: rgb(204, 200, 200);
     border-radius: 50%;
     
 }
@@ -44,8 +45,16 @@
     justify-content: center;
     align-items: center;
     font-family: raleway, sans-serif;
-    font-weight: 500;
+    font-weight: 400;
     padding: 5px;
+}
+.mandarFotos:hover{
+    cursor: pointer;
+    background-color: rgb(204, 200, 200);
+
+}
+.verSeleccionadas{
+    border-right: 1px solid black;
 }
 .camera{
     stroke-width: 1px;
@@ -58,22 +67,6 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
-}
-.seleccionador-send:hover{
-    cursor: pointer;
-    color: red;
-
-    .mandarFotos{
-        color: red;
-    }
-}
-.mandarFotos:hover{
-    cursor: pointer;
-    color: red;
-
-    .seleccionador-send{
-        color: red;
-    }
 }
 
 @media screen and (max-width: 700px){

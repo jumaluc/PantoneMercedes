@@ -8,6 +8,7 @@ import { GaleriaFotosCantidadSelec } from "./GaleriaFotosCantidadSelec.jsx";
 import { LazyLoadComponent } from 'react-lazy-load-image-component';
 import {ZoomIn} from "./Zoom.jsx";
 import { PostSubidaFotos } from './PostSubidaFotos.jsx';
+import { VerFotosSeleccionadas } from "./VerFotosSeleccionadas.jsx";
 
 export function GaleriaFotos(){
     const {id, nombre, apellido} = useParams();
@@ -33,10 +34,10 @@ export function GaleriaFotos(){
     const [startTouchY, setStartTouchY] = useState(0);
     const [isHolding, setIsHolding] = useState(false);
     const holdTimeout = useRef(null);
+    const [verFotosSeleccionadas, setVerFotosSeleccionadas] = useState(false);
 
     if(nombreApellido.length > 20){
         nombreApellido = nombre.toLocaleUpperCase() + " " + apellido[0].toUpperCase() + ".";
-
     }
 
 
@@ -48,7 +49,6 @@ export function GaleriaFotos(){
 
 
     }, []);
-
 
 
     useEffect(() => {
@@ -230,9 +230,10 @@ export function GaleriaFotos(){
 
     return (
         <div className="contenedortotal">
+            {verFotosSeleccionadas && <VerFotosSeleccionadas setVerFotosSeleccionadas={setVerFotosSeleccionadas} fotosSeleccionadas={informacionImgCheckeada} />}
             <header className="galeriaFotos-header"  ref={headerRef}>
                 <h2>{nombreApellido}</h2>
-                <strong>PANTONE MERCEDES</strong>
+                {/*<strong>PANTONE MERCEDES</strong>*/ }
                 <button onClick={scrollToGallery} className="geleriaFotos-header-button">VER FOTOS</button>
                 {mostrarPostSubida ? <PostSubidaFotos setContenido={setContenido}  contenido={contenido} setMostrarPostSubida={setMostrarPostSubida}></PostSubidaFotos> : null}
 
@@ -249,7 +250,7 @@ export function GaleriaFotos(){
                         :   
                         (
                
-                                 <GaleriaFotosCantidadSelec clienteKey={clienteKey} nombreApellido={nombreApellido} setContenido={setContenido} setMostrarPostSubida={setMostrarPostSubida} informacionImgCheckeada={informacionImgCheckeada}  setCantidadImgSeleccionadas={setCantidadImgSeleccionadas}  setInformacionImgCheckeada={setInformacionImgCheckeada} setIndexImgCheckeada={ setIndexImgCheckeada}   cant={cantidadImgSeleccionadas}/>
+                                 <GaleriaFotosCantidadSelec clienteKey={clienteKey} nombreApellido={nombreApellido} setVerFotosSeleccionadas={setVerFotosSeleccionadas} setContenido={setContenido} setMostrarPostSubida={setMostrarPostSubida} informacionImgCheckeada={informacionImgCheckeada}  setCantidadImgSeleccionadas={setCantidadImgSeleccionadas}  setInformacionImgCheckeada={setInformacionImgCheckeada} setIndexImgCheckeada={ setIndexImgCheckeada}   cant={cantidadImgSeleccionadas}/>
                         )
 
                     }

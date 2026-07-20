@@ -25,6 +25,7 @@ app.use(helmet({
       "media-src": ["'self'", "https://storage.googleapis.com"],
     },
   },
+  crossOriginResourcePolicy: { policy: 'cross-origin' },
 }));
 const defaultOrigins = [
   'http://localhost:5173',

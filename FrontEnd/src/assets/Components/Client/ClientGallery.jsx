@@ -46,7 +46,7 @@ import Swal from 'sweetalert2';
 import './Gallery.css';
 import ImageCommentsOverlay from './ImageCommentsOverlay';
 import SongSelectionModal from './SongSelectionModal';
-import { API_URL, thumbUrl } from '../../../config/api';
+import { API_URL } from '../../../config/api';
 
 const FEATURE_INTERVAL = 8;
 
@@ -672,7 +672,7 @@ const Gallery = ({ user, setActiveSection }) => {
                 <div className={`galeria-item ${selectedImages.has(image.id) ? 'selected' : ''}`} onClick={(e) => handleImageClick(image, index, e)}>
                   <LazyImage
                     imageId={image.id}
-                    src={thumbUrl(image.image_url)}
+                    src={image.image_url}
                     alt={image.original_filename}
                     onOrientationDetected={handleOrientationDetected}
                   />
@@ -735,7 +735,7 @@ const Gallery = ({ user, setActiveSection }) => {
               {filteredImages.map((image) => (
                 <div key={image.id} className="preview-item">
                   <div className="preview-image-container">
-                    <img src={thumbUrl(image.image_url)} alt={image.original_filename} className="preview-img" loading="lazy" decoding="async" onClick={() => {
+                    <img src={image.image_url} alt={image.original_filename} className="preview-img" loading="lazy" decoding="async" onClick={() => {
                       setOverlayImage(image);
                       setOverlayIndex(displayedImages.findIndex(img => img.id === image.id));
                       setOverlayVisible(true);
